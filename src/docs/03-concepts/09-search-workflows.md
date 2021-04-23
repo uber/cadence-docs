@@ -286,6 +286,27 @@ cadence --do samples-domain wf list -q 'WorkflowType = "main.Workflow" StartTime
 
 :query:Queries: are supported in [Cadence Web](https://github.com/uber/cadence-web) as of release 3.4.0. Use the "Basic/Advanced" button to switch to "Advanced" mode and type the :query: in the search box.
 
+### TLS Support for connecting to Elasticsearch
+
+If your elasticsearch deployment requires TLS to connect to it, you can add the following to your config template.
+The TLS config is optional and when not provided it defaults to tls.enabled to **false**
+```yaml
+elasticsearch:
+  url:
+    scheme: "https"
+    host: "127.0.0.1:9200"
+  indices:
+    visibility: cadence-visibility-dev
+  tls:
+    enabled: true
+    caFile: /secrets/cadence/elasticsearch_cert.pem
+    enableHostVerification: true
+    serverName: myServerName
+    certFile: /secrets/cadence/certfile.crt
+    keyFile: /secrets/cadence/keyfile.key
+    sslmode: false
+```
+
 ## Local Testing
 
 1. Increase Docker memory to higher than 6GB. Navigate to Docker -> Preferences -> Advanced -> Memory
